@@ -2,14 +2,21 @@ plugins {
     id 'java'
 }
 
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
 group 'pers.ken.cloud'
 version '0.0.1-SNAPSHOT'
 
 dependencies {
+    compile project(':ken-cloud-common')
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
-    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
+    implementation('org.springframework.cloud:spring-cloud-starter-gateway') {
+        exclude(group: 'org.springframework.boot', module: 'spring-boot-starter-webflux')
+    }
+//    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
 }
 
 test {

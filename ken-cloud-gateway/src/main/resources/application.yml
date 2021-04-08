@@ -1,20 +1,23 @@
+
 server:
   port: 38080
 spring:
-  cloud:
-    gateway:
-      routes:
-        - id: backend-service
-          uri: lb://backend-service
-          predicates:
-            - Path=/backend/**
-          filters:
-            - StripPrefix=1
-logging:
-  file:
-    path: ${user.home}/logs
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "loggers,health"
+  application:
+    name: gateway
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: backend-service
+#          uri: lb://backend-service
+#          predicates:
+#            - Path=/backend/**
+#          filters:
+#            - StripPrefix=1
+#logging:
+#  file:
+#    path: ${user.home}/logs
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: "loggers,health"
