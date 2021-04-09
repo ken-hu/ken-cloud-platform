@@ -47,18 +47,11 @@ out/
 # Eclipse project file
 # File - prefix with .
 *.class
-.project
-.settings
 
 # Log file
 *.log
 *.log*
 
-##
-# Intellij idea
-.idea
-*.iml
-dependency-reduced-pom.xml
 
 # BlueJ files
 *.ctxt
@@ -78,8 +71,5 @@ dependency-reduced-pom.xml
 # Folder
 target
 logs\
-
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
 
 

@@ -1,23 +1,22 @@
-package pers.ken.cloud.gateway;
+package pers.ken.cloud.uc;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
- * <code>GatewayApp</code>
+ * <code>UcApp</code>
  * <desc>
  * 描述：
  * <desc/>
- * <b>Creation Time:</b> 2021/4/8 14:13.
+ * <b>Creation Time:</b> 2021/4/8 17:32.
  *
  * @author _Ken.Hu
  */
-@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
+@SpringBootApplication
 @ComponentScan("pers.ken.cloud")
-public class GatewayApp {
+public class UcApp {
     public static void main(String[] args) {
-        SpringApplication.run(GatewayApp.class, args);
+        SpringApplication.run(UcApp.class, args);
     }
 }

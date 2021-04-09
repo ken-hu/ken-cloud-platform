@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 /**
  * <code>BusinessException</code>
  * <desc>
- * 描述：
+ * 描述：自定义业务异常
  * <desc/>
  * <b>Creation Time:</b> 2021/4/8 22:32.
  *
