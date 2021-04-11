@@ -16,7 +16,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
  * <desc/>
  * <b>Creation Time:</b> 2021/4/8 21:38.
  *
- * @author Ken.Hu
+ * @author _Ken.Hu
  */
 @RestControllerAdvice
 public class ResponseHandler implements ResponseBodyAdvice<Object> {

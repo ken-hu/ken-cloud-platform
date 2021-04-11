@@ -2,4 +2,5 @@ rootProject.name = 'ken-cloud-platform'
 include 'ken-cloud-gateway'
 include 'ken-cloud-usercenter'
 include 'ken-cloud-common'
+include 'ken-cloud-usercenter-api'
 

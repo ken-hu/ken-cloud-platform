@@ -1,7 +1,6 @@
 package pers.ken.cloud.common.web;
 
 import lombok.*;
-import pers.ken.cloud.common.web.exception.ServiceCode;
 
 /**
  * <code>PlatformResult</code>
@@ -10,7 +9,7 @@ import pers.ken.cloud.common.web.exception.ServiceCode;
  * <desc/>
  * <b>Creation Time:</b> 2021/4/8 21:48.
  *
- * @author Ken.Hu
+ * @author _Ken.Hu
  */
 @Data
 @NoArgsConstructor

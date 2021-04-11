@@ -22,7 +22,7 @@ public class BeanMapper extends BeanUtils {
         try {
             target = clazz.newInstance();
         } catch (InstantiationException | IllegalAccessException e) {
-            throw new RuntimeException("BeanMapper convert fail !! from " + source.getClass().getName() + " to " + clazz.getName());
+            throw new RuntimeException("BeanMapper convert fail !! from " + source.getClass().getName() + " to " + clazz.getName(), e);
         }
         copyProperties(source, target);
         return target;
@@ -41,8 +41,7 @@ public class BeanMapper extends BeanUtils {
             try {
                 target = clazz.newInstance();
             } catch (InstantiationException | IllegalAccessException e) {
-                e.printStackTrace();
-                throw new RuntimeException("BeanMapper convert fail !! from " + sources.getClass().getName() + " to " + clazz.getName());
+                throw new RuntimeException("BeanMapper convert fail !! from " + sources.getClass().getName() + " to " + clazz.getName(),e);
             }
             copyProperties(source, target);
             list.add(target);

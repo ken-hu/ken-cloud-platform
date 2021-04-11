@@ -1,4 +1,4 @@
-package pers.ken.cloud.common.web.exception;
+package pers.ken.cloud.common.web;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
  * <desc/>
  * <b>Creation Time:</b> 2021/4/8 22:32.
  *
- * @author Ken.Hu
+ * @author _Ken.Hu
  */
 @Getter
 public class BusinessException extends RuntimeException{

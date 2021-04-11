@@ -1,4 +1,4 @@
-package pers.ken.cloud.common.web.exception;
+package pers.ken.cloud.common.web;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,7 +10,7 @@ import lombok.Getter;
  * <desc/>
  * <b>Creation Time:</b> 2021/4/8 21:51.
  *
- * @author Ken.Hu
+ * @author _Ken.Hu
  */
 @Getter
 @AllArgsConstructor
