@@ -1,7 +1,7 @@
-package pers.ken.cloud.uc.oauth.mapper;
+package pers.ken.cloud.uc.account.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import pers.ken.cloud.uc.oauth.entity.User;
+import pers.ken.cloud.uc.account.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

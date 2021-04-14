@@ -5,19 +5,19 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import pers.ken.cloud.uc.oauth.service.AuthTokenEnhancer;
-import pers.ken.cloud.uc.oauth.service.ClientDetailService;
-import pers.ken.cloud.uc.oauth.service.UserService;
 
 import javax.sql.DataSource;
 import java.util.Arrays;
@@ -35,15 +35,15 @@ import java.util.Arrays;
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
     private final AuthenticationManager authenticationManager;
-    private final UserService userService;
-    private final ClientDetailService clientDetailService;
+    private final UserDetailsService userDetailsService;
+    private final ClientDetailsService clientDetailsService;
     private final DataSource dataSource;
 
     @Autowired
-    public AuthorizationServerConfig(AuthenticationManager authenticationManager, UserService userService, ClientDetailService clientDetailService, DataSource dataSource) {
+    public AuthorizationServerConfig(AuthenticationManager authenticationManager, UserDetailsService userDetailsService, ClientDetailsService clientDetailsService, DataSource dataSource) {
         this.authenticationManager = authenticationManager;
-        this.userService = userService;
-        this.clientDetailService = clientDetailService;
+        this.userDetailsService = userDetailsService;
+        this.clientDetailsService = clientDetailsService;
         this.dataSource = dataSource;
     }
 
@@ -87,6 +87,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     /**
      * token校验策略
+     *
      * @param security
      * @throws Exception
      */
@@ -105,7 +106,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      */
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.withClientDetails(clientDetailService);
+        clients.withClientDetails(clientDetailsService);
     }
 
     /**
@@ -120,7 +121,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .accessTokenConverter(jwtAccessTokenConverter())
                 .tokenEnhancer(enhancerChain)
                 .authenticationManager(authenticationManager)
-                .userDetailsService(userService)
+                .userDetailsService(userDetailsService)
                 .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);
     }
 

@@ -1,4 +1,4 @@
-package pers.ken.cloud.uc.oauth.entity;
+package pers.ken.cloud.uc.account.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;

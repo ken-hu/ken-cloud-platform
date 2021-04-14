@@ -1,9 +1,10 @@
 package pers.ken.cloud.uc.account.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import pers.ken.cloud.uc.account.dto.ResourceUpdateDTO;
+import pers.ken.cloud.uc.account.service.RoleService;
 
 /**
  * <p>
@@ -16,6 +17,28 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/account/role")
 public class RoleController {
+    private final RoleService roleService;
+
+    @Autowired
+    public RoleController(RoleService roleService) {
+        this.roleService = roleService;
+    }
+
+    @PostMapping
+    public void create() {
+    }
+
+    @DeleteMapping
+    public void delete(@RequestParam Integer id) {
+    }
+
+    @PutMapping
+    public void update(@RequestParam ResourceUpdateDTO resourceUpdateDTO) {
+    }
+
+    @GetMapping
+    public void search(@RequestParam String name) {
+    }
 
 }
 

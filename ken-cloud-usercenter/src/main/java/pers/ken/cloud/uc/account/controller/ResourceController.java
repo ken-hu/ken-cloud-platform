@@ -4,6 +4,7 @@ package pers.ken.cloud.uc.account.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pers.ken.cloud.uc.account.dto.ResourceCreateDTO;
+import pers.ken.cloud.uc.account.dto.ResourceUpdateDTO;
 import pers.ken.cloud.uc.account.service.ResourceService;
 
 /**
@@ -30,15 +31,15 @@ public class ResourceController {
     }
 
     @DeleteMapping
-    public void delete() {
+    public void delete(@RequestParam Integer id) {
     }
 
     @PutMapping
-    public void update() {
+    public void update(@RequestParam ResourceUpdateDTO resourceUpdateDTO) {
     }
 
     @GetMapping
-    public void search() {
+    public void search(@RequestParam String name) {
     }
 
 }

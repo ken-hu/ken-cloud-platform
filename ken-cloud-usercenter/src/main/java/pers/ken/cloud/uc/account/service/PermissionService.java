@@ -1,7 +1,9 @@
 package pers.ken.cloud.uc.account.service;
 
-import pers.ken.cloud.uc.account.entity.Permission;
 import com.baomidou.mybatisplus.extension.service.IService;
+import pers.ken.cloud.uc.account.entity.Permission;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2021-04-11
  */
 public interface PermissionService extends IService<Permission> {
-
+    List<Permission> getByUsername(String username);
 }
