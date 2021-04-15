@@ -4,13 +4,23 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="pers.ken.cloud.uc.account.entity.Role">
-        <id column="id" property="id" />
-        <result column="name" property="name" />
-        <result column="desc" property="desc" />
-        <result column="create_time" property="createTime" />
-        <result column="create_user" property="createUser" />
-        <result column="update_time" property="updateTime" />
-        <result column="update_user" property="updateUser" />
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="desc" property="desc"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_user" property="createUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_user" property="updateUser"/>
     </resultMap>
+    <insert id="insertRolePermission">
+        insert into db_usercenter.t_uc_role_permission_rel (role_id, permission_id)
+        values (#{roleId}, #{permissionId})
+    </insert>
+
+    <select id="selectAllByUserId" resultType="pers.ken.cloud.uc.account.entity.Role">
+        select *
+        from db_usercenter.t_uc_role
+        where id in (select role_id from db_usercenter.t_uc_user_role_rel where user_id = #{userId})
+    </select>
 
 </mapper>

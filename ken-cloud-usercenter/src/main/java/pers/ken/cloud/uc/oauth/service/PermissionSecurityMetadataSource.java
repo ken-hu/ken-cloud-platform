@@ -31,6 +31,6 @@ public class PermissionSecurityMetadataSource implements FilterInvocationSecurit
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return false;
+        return FilterInvocation.class.isAssignableFrom(clazz);
     }
 }

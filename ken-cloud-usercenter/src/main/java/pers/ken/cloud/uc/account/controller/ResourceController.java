@@ -32,14 +32,17 @@ public class ResourceController {
 
     @DeleteMapping
     public void delete(@RequestParam Integer id) {
+        resourceService.delete(id);
     }
 
     @PutMapping
-    public void update(@RequestParam ResourceUpdateDTO resourceUpdateDTO) {
+    public void edit(@RequestParam ResourceUpdateDTO resourceUpdateDTO) {
+        resourceService.edit(resourceUpdateDTO);
     }
 
     @GetMapping
     public void search(@RequestParam String name) {
+
     }
 
 }

@@ -23,11 +23,11 @@ import java.util.Collections;
  * @author _Ken.Hu
  */
 @Component
-public class PermissionFilter implements FilterInvocationSecurityMetadataSource {
+public class PermissionFilterInvocationSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
     private final PermissionService permissionService;
 
     @Autowired
-    public PermissionFilter(PermissionService permissionService) {
+    public PermissionFilterInvocationSecurityMetadataSource(PermissionService permissionService) {
         this.permissionService = permissionService;
     }
 

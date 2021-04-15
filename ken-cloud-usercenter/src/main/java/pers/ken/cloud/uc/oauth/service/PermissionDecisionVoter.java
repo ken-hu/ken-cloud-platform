@@ -51,7 +51,7 @@ public class PermissionDecisionVoter implements AccessDecisionVoter<Object> {
         Object principal = authentication.getPrincipal();
         AuthUser authUser = (AuthUser) principal;
         String username = authUser.getUsername();
-        List<Permission> permissions = permissionService.getByUsername(username);
+        List<Permission> permissions = permissionService.listByUsername(username);
         // todo 判断权限
         return ACCESS_DENIED;
     }

@@ -1,6 +1,7 @@
 package pers.ken.cloud.uc.account.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import pers.ken.cloud.uc.account.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
@@ -14,4 +15,10 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
+    /**
+     * 插入用户角色关联关系
+     * @param userId 用户ID
+     * @param roleId 角色ID
+     */
+    void insertUserRole(@Param("userId") Long userId, @Param("roleId") Long roleId);
 }

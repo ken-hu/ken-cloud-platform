@@ -139,16 +139,26 @@ CREATE TABLE `t_uc_permission`
 DROP TABLE IF EXISTS `t_uc_user_role_rel`;
 CREATE TABLE `t_uc_user_role_rel`
 (
-    `id`      bigint(20)   NOT NULL COMMENT '主键',
-    `user_id` varchar(50)  NOT NULL COMMENT '用户',
-    `role_id` varchar(200) NULL COMMENT '角色'
+    `id`      bigint(20) NOT NULL COMMENT '主键',
+    `user_id` bigint(20) NOT NULL COMMENT '用户',
+    `role_id` bigint(20) NULL COMMENT '角色'
+) ENGINE = INNODB ,
+  DEFAULT CHARSET = utf8 ,COMMENT '用户角色关联表';
+
+DROP TABLE IF EXISTS `t_uc_role_permission_rel`;
+CREATE TABLE `t_uc_role_permission_rel`
+(
+    `id`            bigint(20) NOT NULL COMMENT '主键',
+    `role_id`       bigint(20) NOT NULL COMMENT '角色',
+    `permission_id` bigint(20) NULL COMMENT '权限'
 ) ENGINE = INNODB ,
   DEFAULT CHARSET = utf8 ,COMMENT '用户角色关联表';
 
 DROP TABLE IF EXISTS `t_uc_permission_resource_rel`;
 CREATE TABLE `t_uc_permission_resource_rel`
 (
-    `permission_id` varchar(50)  NOT NULL COMMENT '权限',
-    `resource_id`   varchar(200) NULL COMMENT '资源'
+    `id`            bigint(20) NOT NULL COMMENT '主键',
+    `permission_id` bigint(20) NOT NULL COMMENT '权限',
+    `resource_id`   bigint(20) NULL COMMENT '资源'
 ) ENGINE = INNODB ,
   DEFAULT CHARSET = utf8 ,COMMENT '权限资源关联表';

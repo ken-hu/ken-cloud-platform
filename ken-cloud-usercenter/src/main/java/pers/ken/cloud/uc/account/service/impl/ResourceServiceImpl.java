@@ -3,6 +3,7 @@ package pers.ken.cloud.uc.account.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import pers.ken.cloud.common.utils.BeanMapper;
 import pers.ken.cloud.uc.account.dto.ResourceCreateDTO;
+import pers.ken.cloud.uc.account.dto.ResourceUpdateDTO;
 import pers.ken.cloud.uc.account.entity.Resource;
 import pers.ken.cloud.uc.account.entity.cons.ResourceType;
 import pers.ken.cloud.uc.account.mapper.ResourceMapper;
@@ -33,5 +34,17 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
         Resource resource = BeanMapper.copyProperties(dto, Resource.class);
         resource.setResourceType(ResourceType.convert(dto.getResourceType()));
         resourceMapper.insert(resource);
+    }
+
+    @Override
+    public void delete(Integer id) {
+        resourceMapper.deleteById(id);
+    }
+
+    @Override
+    public void edit(ResourceUpdateDTO dto) {
+        ResourceUpdateDTO resourceUpdateDTO = new ResourceUpdateDTO();
+        Resource resource = BeanMapper.copyProperties(resourceUpdateDTO, Resource.class);
+        resourceMapper.updateById(resource);
     }
 }

@@ -19,13 +19,13 @@ public enum ResourceType implements IEnum<Integer> {
     /**
      * 资源类型
      */
-    APP(1, "文件"),
-    API(1, "文件"),
-    TABLE(1, "文件"),
-    TABLE_COL(1, "文件"),
-    MENU(1, "文件"),
-    MENU_BUTTON(1, "文件"),
-    FILE(1, "文件");
+    APP(1, "应用"),
+    API(2, "API"),
+    TABLE(3, "表"),
+    TABLE_COL(4, "表字段"),
+    MENU(5, "菜单"),
+    MENU_BUTTON(6, "菜单按钮"),
+    FILE(7, "文件");
 
     private final int code;
     private final String desc;

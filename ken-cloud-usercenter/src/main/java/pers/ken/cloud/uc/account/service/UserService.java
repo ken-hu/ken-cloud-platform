@@ -1,7 +1,10 @@
 package pers.ken.cloud.uc.account.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import pers.ken.cloud.uc.account.entity.Role;
 import pers.ken.cloud.uc.account.entity.User;
+
+import java.util.List;
 
 /**
  * <p>
@@ -14,4 +17,7 @@ import pers.ken.cloud.uc.account.entity.User;
 public interface UserService extends IService<User>  {
 
     User get(String username);
+
+    void bindUserRole(Long userId, List<Role> roles);
+
 }

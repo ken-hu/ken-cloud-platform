@@ -4,9 +4,12 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pers.ken.cloud.uc.account.entity.Role;
 import pers.ken.cloud.uc.account.entity.User;
 import pers.ken.cloud.uc.account.mapper.UserMapper;
 import pers.ken.cloud.uc.account.service.UserService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -32,5 +35,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 Wrappers.lambdaQuery(User.class)
                         .eq(User::getUsername, username)
         );
+    }
+
+    @Override
+    public void bindUserRole(Long userId, List<Role> roles) {
+        roles.forEach(role -> userMapper.insertUserRole(userId, role.getId()));
     }
 }

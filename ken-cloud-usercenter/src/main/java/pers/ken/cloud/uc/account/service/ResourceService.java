@@ -1,6 +1,7 @@
 package pers.ken.cloud.uc.account.service;
 
 import pers.ken.cloud.uc.account.dto.ResourceCreateDTO;
+import pers.ken.cloud.uc.account.dto.ResourceUpdateDTO;
 import pers.ken.cloud.uc.account.entity.Resource;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -14,4 +15,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ResourceService extends IService<Resource> {
     void create(ResourceCreateDTO dto);
+
+    void delete(Integer id);
+
+    void edit(ResourceUpdateDTO dto);
 }

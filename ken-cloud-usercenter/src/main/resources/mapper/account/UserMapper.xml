@@ -15,4 +15,9 @@
         <result column="update_user" property="updateUser" />
     </resultMap>
 
+    <insert id="insertUserRole">
+        insert into db_usercenter.t_uc_user_role_rel (user_id, role_id)
+        values (#{userId}, #{roleId})
+    </insert>
+
 </mapper>
