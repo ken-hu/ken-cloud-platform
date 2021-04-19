@@ -51,7 +51,8 @@ public class AuthWebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
                 .antMatchers("/swagger-ui/**", "/swagger-resources/**", "/webjars/**", "/v3/**","/v2/**")
-                .antMatchers("/actuator/**");
+                .antMatchers("/actuator/**")
+                .antMatchers("/test/**");
     }
 
     @Override

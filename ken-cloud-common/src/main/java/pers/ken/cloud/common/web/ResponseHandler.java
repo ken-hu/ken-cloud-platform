@@ -24,12 +24,12 @@ public class ResponseHandler implements ResponseBodyAdvice<Object> {
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
         boolean isResponseBeanType = PlatformResult.class.equals(returnType.getParameterType());
-        System.out.println(isResponseBeanType);
         return !isResponseBeanType;
     }
 
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
+        System.out.println(body);
         if (body instanceof String) {
             return JSON.toJSONString(PlatformResult.success(body));
         }
