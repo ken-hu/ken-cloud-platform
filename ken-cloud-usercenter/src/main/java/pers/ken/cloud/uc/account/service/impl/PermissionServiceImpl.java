@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import pers.ken.cloud.uc.account.entity.Permission;
 import pers.ken.cloud.uc.account.entity.Resource;
 import pers.ken.cloud.uc.account.entity.Role;
+import pers.ken.cloud.uc.account.entity.cons.ResourceType;
 import pers.ken.cloud.uc.account.mapper.PermissionMapper;
 import pers.ken.cloud.uc.account.service.PermissionService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import pers.ken.cloud.uc.account.service.RoleService;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -47,4 +49,5 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     public List<Permission> listByRoles(List<Role> roles) {
         return permissionMapper.listPermissionByRoles(roles);
     }
+
 }

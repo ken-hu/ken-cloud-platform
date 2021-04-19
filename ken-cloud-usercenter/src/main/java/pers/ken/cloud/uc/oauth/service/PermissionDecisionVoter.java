@@ -3,6 +3,7 @@ package pers.ken.cloud.uc.oauth.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.ConfigAttribute;
+import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -26,13 +27,7 @@ import java.util.Objects;
 @Component
 public class PermissionDecisionVoter implements AccessDecisionVoter<Object> {
 
-    private final PermissionService permissionService;
-
-    @Autowired
-    public PermissionDecisionVoter(PermissionService permissionService) {
-        this.permissionService = permissionService;
-    }
-
+    private static final String ANONYMOUS_USER = "anonymousUser";
     @Override
     public boolean supports(ConfigAttribute attribute) {
         return Objects.nonNull(attribute.getAttribute());
@@ -43,15 +38,27 @@ public class PermissionDecisionVoter implements AccessDecisionVoter<Object> {
         return true;
     }
 
+    /**
+     *
+     * @param authentication
+     * @param object
+     * @param attributes
+     * @return
+     */
     @Override
     public int vote(Authentication authentication, Object object, Collection<ConfigAttribute> attributes) {
+        Object principal = authentication.getPrincipal();
+
+        if (ANONYMOUS_USER.equals(principal)) {
+            // 当前用户未登录，拒绝访问
+            return ACCESS_DENIED;
+        }
+
         if (CollectionUtils.isEmpty(attributes)) {
             return ACCESS_DENIED;
         }
-        Object principal = authentication.getPrincipal();
         AuthUser authUser = (AuthUser) principal;
         String username = authUser.getUsername();
-        List<Permission> permissions = permissionService.listByUsername(username);
         // todo 判断权限
         return ACCESS_DENIED;
     }

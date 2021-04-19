@@ -4,16 +4,24 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="pers.ken.cloud.uc.account.entity.Resource">
-        <id column="id" property="id" />
-        <result column="name" property="name" />
-        <result column="desc" property="desc" />
-        <result column="resource_type" property="resourceType" />
-        <result column="resource_key" property="resourceKey" />
-        <result column="ext_info" property="extInfo" />
-        <result column="create_time" property="createTime" />
-        <result column="create_user" property="createUser" />
-        <result column="update_time" property="updateTime" />
-        <result column="update_user" property="updateUser" />
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="desc" property="desc"/>
+        <result column="resource_type" property="resourceType"/>
+        <result column="resource_key" property="resourceKey"/>
+        <result column="ext_info" property="extInfo"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_user" property="createUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_user" property="updateUser"/>
     </resultMap>
+    <select id="selectAllByPermissions" resultType="pers.ken.cloud.uc.account.entity.Resource">
+        select * from db_usercenter.t_uc_role where id in (select role_id from db_usercenter.t_uc_role_permission_rel
+        where permission_id in (
+        <foreach item="item" collection="list" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        ))
+    </select>
 
 </mapper>

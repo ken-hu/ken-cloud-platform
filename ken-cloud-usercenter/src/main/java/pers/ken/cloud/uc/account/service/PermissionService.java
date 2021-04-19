@@ -4,8 +4,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import pers.ken.cloud.uc.account.entity.Permission;
 import pers.ken.cloud.uc.account.entity.Resource;
 import pers.ken.cloud.uc.account.entity.Role;
+import pers.ken.cloud.uc.account.entity.cons.ResourceType;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -21,4 +23,5 @@ public interface PermissionService extends IService<Permission> {
     void bindResources(List<Resource> resources,Long permissionId);
 
     List<Permission> listByRoles(List<Role> roles);
+
 }

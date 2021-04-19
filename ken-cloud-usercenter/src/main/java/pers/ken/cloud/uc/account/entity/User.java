@@ -18,7 +18,7 @@ import java.util.Date;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@TableName("t_uc_oauth_user")
+@TableName("t_uc_user")
 public class User extends Model<User> {
 
     private static final long serialVersionUID = 1L;

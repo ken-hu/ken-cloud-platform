@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -18,6 +19,8 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import pers.ken.cloud.uc.oauth.service.AuthTokenEnhancer;
+import pers.ken.cloud.uc.oauth.service.CustomAccessDeniedHandler;
+import pers.ken.cloud.uc.oauth.service.CustomAuthenticationEntryPoint;
 
 import javax.sql.DataSource;
 import java.util.Arrays;
@@ -38,13 +41,19 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private final UserDetailsService userDetailsService;
     private final ClientDetailsService clientDetailsService;
     private final DataSource dataSource;
+    private final CustomAccessDeniedHandler customAccessDeniedHandler;
+    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public AuthorizationServerConfig(AuthenticationManager authenticationManager, UserDetailsService userDetailsService, ClientDetailsService clientDetailsService, DataSource dataSource) {
+    public AuthorizationServerConfig(AuthenticationManager authenticationManager, UserDetailsService userDetailsService, ClientDetailsService clientDetailsService, DataSource dataSource, CustomAccessDeniedHandler customAccessDeniedHandler, CustomAuthenticationEntryPoint customAuthenticationEntryPoint, PasswordEncoder passwordEncoder) {
         this.authenticationManager = authenticationManager;
         this.userDetailsService = userDetailsService;
         this.clientDetailsService = clientDetailsService;
         this.dataSource = dataSource;
+        this.customAccessDeniedHandler = customAccessDeniedHandler;
+        this.customAuthenticationEntryPoint = customAuthenticationEntryPoint;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Bean
@@ -94,11 +103,14 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
         security
+                .passwordEncoder(passwordEncoder)
                 //获取token的请求，不进行拦截
                 .tokenKeyAccess("permitAll()")
                 //检查token的请求，要先通过验证
                 .checkTokenAccess("isAuthenticated()")
-                .allowFormAuthenticationForClients();
+                .allowFormAuthenticationForClients()
+                .authenticationEntryPoint(customAuthenticationEntryPoint)
+                .accessDeniedHandler(customAccessDeniedHandler);
     }
 
     /**
@@ -106,7 +118,14 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      */
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.withClientDetails(clientDetailsService);
+//        clients.withClientDetails(clientDetailsService);
+        clients.inMemory()
+                .withClient("usercenter")
+                .scopes("all")
+                .secret(passwordEncoder.encode("123456"))
+                .resourceIds("usercenter")
+                .authorizedGrantTypes("password", "authorization_code", "refresh_token","client_credentials")
+                ;
     }
 
     /**

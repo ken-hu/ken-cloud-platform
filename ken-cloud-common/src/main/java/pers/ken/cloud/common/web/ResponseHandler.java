@@ -29,7 +29,6 @@ public class ResponseHandler implements ResponseBodyAdvice<Object> {
 
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
-        System.out.println(body);
         if (body instanceof String) {
             return JSON.toJSONString(PlatformResult.success(body));
         }

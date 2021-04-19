@@ -1,8 +1,12 @@
 package pers.ken.cloud.uc.account.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import pers.ken.cloud.uc.account.entity.Resource;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import pers.ken.cloud.uc.account.entity.Role;
+
+import java.util.List;
 
 /**
  * <p>
@@ -14,5 +18,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 @Mapper
 public interface ResourceMapper extends BaseMapper<Resource> {
+
+    List<Resource> selectAllByPermissions(@Param("permissionIds") List<Long> permissionIds);
 
 }

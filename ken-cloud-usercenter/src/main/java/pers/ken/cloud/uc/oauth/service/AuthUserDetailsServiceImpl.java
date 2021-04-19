@@ -21,11 +21,11 @@ import java.util.Collections;
  * @author _Ken.Hu
  */
 @Component
-public class AuthServiceImpl implements UserDetailsService {
+public class AuthUserDetailsServiceImpl implements UserDetailsService {
     private final UserService userService;
 
     @Autowired
-    public AuthServiceImpl(UserService userService) {
+    public AuthUserDetailsServiceImpl(UserService userService) {
         this.userService = userService;
     }
 

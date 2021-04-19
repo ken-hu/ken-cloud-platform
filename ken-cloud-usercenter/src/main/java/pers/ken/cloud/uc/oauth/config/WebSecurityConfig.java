@@ -27,12 +27,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  */
 @Configuration
 @EnableWebSecurity
-public class AuthWebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
 
     @Autowired
-    public AuthWebSecurityConfig(UserDetailsService userDetailsService) {
+    public WebSecurityConfig(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
@@ -52,7 +52,8 @@ public class AuthWebSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring()
                 .antMatchers("/swagger-ui/**", "/swagger-resources/**", "/webjars/**", "/v3/**","/v2/**")
                 .antMatchers("/actuator/**")
-                .antMatchers("/test/**");
+                .antMatchers("/test/**")
+        ;
     }
 
     @Override
