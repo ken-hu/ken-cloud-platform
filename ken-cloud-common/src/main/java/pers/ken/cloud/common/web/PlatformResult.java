@@ -21,6 +21,7 @@ public class PlatformResult<T> {
     private void convertServiceCode(ServiceCode serviceCode) {
         this.code = serviceCode.getCode();
         this.msg = serviceCode.getMsg();
+        this.data = null;
     }
 
     private void convertServiceCode(ServiceCode serviceCode, T data) {
@@ -28,13 +29,19 @@ public class PlatformResult<T> {
         this.data = data;
     }
 
-    public static <T> PlatformResult<T> success() {
+    public static <T> PlatformResult<T> custom(ServiceCode serviceCode,T data) {
+        PlatformResult<T> result = new PlatformResult<>();
+        result.convertServiceCode(serviceCode,data);
+        return result;
+    }
+
+    public static <T> PlatformResult<T> ok() {
         PlatformResult<T> result = new PlatformResult<>();
         result.convertServiceCode(ServiceCode.SUCCESS);
         return result;
     }
 
-    public static <T> PlatformResult<T> success(T data) {
+    public static <T> PlatformResult<T> ok(T data) {
         PlatformResult<T> result = new PlatformResult<>();
         result.convertServiceCode(ServiceCode.SUCCESS, data);
         return result;

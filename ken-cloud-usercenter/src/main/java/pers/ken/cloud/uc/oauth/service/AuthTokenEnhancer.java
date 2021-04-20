@@ -16,6 +16,7 @@ import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 public class AuthTokenEnhancer implements TokenEnhancer {
     @Override
     public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
-        return null;
+        // todo 增强token信息存储
+        return accessToken;
     }
 }

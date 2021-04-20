@@ -9,7 +9,7 @@ import java.util.function.Supplier;
 /**
  * <code>BeanMapper</code>
  * <desc>
- * 描述：Bean转换类，集成SpringBoot的BeanUtils，做简单的封装加强
+ * 描述：Bean转换类，集成SpringBoot的BeanUtils，做简单的封装加l强
  * <desc/>
  * <b>Create Time:</b> 2020/4/22 15:13.
  *

@@ -21,6 +21,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import pers.ken.cloud.uc.oauth.service.AuthTokenEnhancer;
 import pers.ken.cloud.uc.oauth.service.CustomAccessDeniedHandler;
 import pers.ken.cloud.uc.oauth.service.CustomAuthenticationEntryPoint;
+import pers.ken.cloud.uc.oauth.service.CustomWebResponseExceptionTranslator;
 
 import javax.sql.DataSource;
 import java.util.Arrays;
@@ -43,16 +44,18 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private final DataSource dataSource;
     private final CustomAccessDeniedHandler customAccessDeniedHandler;
     private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+    private final CustomWebResponseExceptionTranslator customWebResponseExceptionTranslator;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public AuthorizationServerConfig(AuthenticationManager authenticationManager, UserDetailsService userDetailsService, ClientDetailsService clientDetailsService, DataSource dataSource, CustomAccessDeniedHandler customAccessDeniedHandler, CustomAuthenticationEntryPoint customAuthenticationEntryPoint, PasswordEncoder passwordEncoder) {
+    public AuthorizationServerConfig(AuthenticationManager authenticationManager, UserDetailsService userDetailsService, ClientDetailsService clientDetailsService, DataSource dataSource, CustomAccessDeniedHandler customAccessDeniedHandler, CustomAuthenticationEntryPoint customAuthenticationEntryPoint, CustomWebResponseExceptionTranslator customWebResponseExceptionTranslator, PasswordEncoder passwordEncoder) {
         this.authenticationManager = authenticationManager;
         this.userDetailsService = userDetailsService;
         this.clientDetailsService = clientDetailsService;
         this.dataSource = dataSource;
         this.customAccessDeniedHandler = customAccessDeniedHandler;
         this.customAuthenticationEntryPoint = customAuthenticationEntryPoint;
+        this.customWebResponseExceptionTranslator = customWebResponseExceptionTranslator;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -137,10 +140,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         enhancerChain.setTokenEnhancers(Arrays.asList(authTokenEnhancer(), jwtAccessTokenConverter()));
 
         endpoints
+                .tokenStore(tokenStore())
                 .accessTokenConverter(jwtAccessTokenConverter())
                 .tokenEnhancer(enhancerChain)
                 .authenticationManager(authenticationManager)
                 .userDetailsService(userDetailsService)
+                .exceptionTranslator(customWebResponseExceptionTranslator)
                 .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);
     }
 

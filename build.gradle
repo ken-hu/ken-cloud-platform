@@ -18,6 +18,9 @@ ext {
 
 
 allprojects {
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+    }
     group 'pers.ken.cloud'
     version '0.0.1-SNAPSHOT'
     apply plugin: 'idea'

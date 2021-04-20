@@ -56,7 +56,7 @@ public class DataPermissionAop {
             }
         }*/
         System.out.println(nameAndArgs);
-        nameAndArgs.put("test", "ssdsdsds");
+        nameAndArgs.put("test", "中文测试");
         Collection<Object> values = nameAndArgs.values();
         return joinPoint.proceed(values.toArray(new Object[0]));
     }

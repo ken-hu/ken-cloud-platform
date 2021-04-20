@@ -56,7 +56,7 @@ public class GlobalExceptionHandler {
     public PlatformResult<Void> handleBindException(BindException e, HttpServletRequest request) {
         log.warn("BindException, uri:{}, caused by: ", request.getRequestURI(), e);
         String message = Objects.requireNonNull(e.getBindingResult().getFieldError()).getDefaultMessage();
-        return PlatformResult.invalid();
+        return PlatformResult.invalid(message);
     }
 
 
