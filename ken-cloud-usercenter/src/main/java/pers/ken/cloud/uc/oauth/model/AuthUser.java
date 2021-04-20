@@ -15,11 +15,15 @@ import java.util.Collection;
  * @author _Ken.Hu
  */
 public class AuthUser extends User {
-    public AuthUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+    private Long id;
+
+    public AuthUser(Long userId,String username, String password, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
+        this.id = userId;
     }
 
-    public AuthUser(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
+    public AuthUser(Long userId,String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
+        this.id = userId;
     }
 }

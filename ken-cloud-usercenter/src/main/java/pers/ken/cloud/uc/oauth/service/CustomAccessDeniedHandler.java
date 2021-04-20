@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 /**
  * <code>CustomAccessDeniedHandler</code>
@@ -29,6 +30,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
         response.setStatus(HttpStatus.OK.value());
         response.setHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE);
-        response.getWriter().write(JSON.toJSONString(PlatformResult.ok(ServiceCode.PERMISSION_NOT_ENOUGH)));
+        response.setCharacterEncoding(StandardCharsets.UTF_8.displayName());
+        response.getWriter().write(JSON.toJSONString(PlatformResult.custom(ServiceCode.PERMISSION_NOT_ENOUGH,"请联系管理员获取权限")));
     }
 }

@@ -36,6 +36,6 @@ public class AuthUserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("Cannot found username:" + username);
         }
 
-        return new AuthUser(user.getUsername(), user.getPassword(), true, true, true, true, Collections.EMPTY_SET);
+        return new AuthUser(user.getId(),user.getUsername(), user.getPassword(), true, true, true, true, Collections.EMPTY_SET);
     }
 }

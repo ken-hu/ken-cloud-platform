@@ -2,6 +2,7 @@ package pers.ken.cloud.uc.oauth.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
+import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.FilterInvocation;
@@ -39,14 +40,15 @@ public class PermissionSecurityMetadataSource implements FilterInvocationSecurit
 
     @Override
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        AuthUser authUser = (AuthUser) authentication.getPrincipal();
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        AuthUser authUser = (AuthUser) authentication.getPrincipal();
         FilterInvocation filterInvocation = (FilterInvocation) object;
         String requestUri = filterInvocation.getHttpRequest().getRequestURI();
-        String username = authUser.getUsername();
-        List<Resource> resources = resourceService.listByUsername(username, ResourceType.API);
-        List<String> apis = resources.stream().map(Resource::getResourceKey).collect(Collectors.toList());
-        return null;
+//        String username = authUser.getUsername();
+//        List<Resource> resources = resourceService.listByUsername(username, ResourceType.API);
+//        List<String> apis = resources.stream().map(Resource::getResourceKey).collect(Collectors.toList());
+
+        return SecurityConfig.createList(requestUri);
     }
 
     @Override

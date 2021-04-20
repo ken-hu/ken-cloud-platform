@@ -5,6 +5,7 @@ import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import pers.ken.cloud.uc.account.entity.Permission;
@@ -58,7 +59,7 @@ public class PermissionDecisionVoter implements AccessDecisionVoter<Object> {
             return ACCESS_DENIED;
         }
         AuthUser authUser = (AuthUser) principal;
-        String username = authUser.getUsername();
+        System.out.println(authUser);
         // todo 判断权限
         return ACCESS_DENIED;
     }
