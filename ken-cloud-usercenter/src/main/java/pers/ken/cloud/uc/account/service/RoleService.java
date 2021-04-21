@@ -15,5 +15,11 @@ import java.util.List;
  */
 public interface RoleService extends IService<Role> {
 
-    List<Role> listByUsername(String username);
+
+    /**
+     * 查询用户的角色
+     * @param userId 用户id
+     * @return 角色集合
+     */
+    List<Role> list(Long userId);
 }

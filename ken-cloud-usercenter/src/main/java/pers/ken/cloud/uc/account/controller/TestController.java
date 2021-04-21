@@ -1,13 +1,10 @@
 package pers.ken.cloud.uc.account.controller;
 
 import org.springframework.http.MediaType;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pers.ken.cloud.common.web.ServiceCode;
 import pers.ken.cloud.uc.oauth.DataPermission;
-import pers.ken.cloud.uc.oauth.model.AuthUser;
 
 /**
  * <code>TestController</code>
@@ -31,7 +28,7 @@ public class TestController {
     public String okokok(String ok) {
         ServiceCode success = ServiceCode.SUCCESS;
         System.out.println("XXXXXXXXXXXXX" + success.getCode());
-        System.out.println("XXXXXXXXXXXXX" + success.getMsg());
+        System.out.println("XXXXXXXXXXXXX" + success.getDesc());
         return ok;
     }
 }

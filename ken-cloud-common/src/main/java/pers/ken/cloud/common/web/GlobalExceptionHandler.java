@@ -78,7 +78,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<PlatformResult<Void>> handleBusinessException(BusinessException e, HttpServletRequest request) {
         log.warn("BusinessException, uri:{}, caused by: ", request.getRequestURI(), e);
         return ResponseEntity
-                .status(e.getHttpStatus())
+                .status(e.getServiceCode().getHttpStatus())
                 .body(PlatformResult.fail(e.getServiceCode()));
     }
 

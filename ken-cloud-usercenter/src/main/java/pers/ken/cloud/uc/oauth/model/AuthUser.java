@@ -1,5 +1,6 @@
 package pers.ken.cloud.uc.oauth.model;
 
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
@@ -15,7 +16,8 @@ import java.util.Collection;
  * @author _Ken.Hu
  */
 public class AuthUser extends User {
-    private Long id;
+    @Getter
+    private final Long id;
 
     public AuthUser(Long userId,String username, String password, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);

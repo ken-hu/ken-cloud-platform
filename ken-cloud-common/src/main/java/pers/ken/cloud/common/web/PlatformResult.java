@@ -20,7 +20,7 @@ public class PlatformResult<T> {
 
     private void convertServiceCode(ServiceCode serviceCode) {
         this.code = serviceCode.getCode();
-        this.msg = serviceCode.getMsg();
+        this.msg = serviceCode.getDesc();
         this.data = null;
     }
 

@@ -2,6 +2,7 @@ package pers.ken.cloud.common.web;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
 
@@ -18,19 +19,21 @@ import java.io.Serializable;
 @AllArgsConstructor
 public enum ServiceCode implements Serializable {
     /* 成功状态码 */
-    SUCCESS(1, "成功"),
+    SUCCESS(1, "success", HttpStatus.OK.value()),
 
-    /* 成功状态码 */
-    FAIL(0, "请求失败"),
+    /* 失败状态码 */
+    FAIL(0, "failed", HttpStatus.INTERNAL_SERVER_ERROR.value()),
 
-    PARAM_IS_INVALID(10001, "参数无效"),
+    PARAM_IS_INVALID(10001, "par" +
+            "ams_is_invalid", HttpStatus.BAD_REQUEST.value()),
 
-    PERMISSION_NOT_ENOUGH(20001, "权限不足,拒绝访问"),
-    AUTHENTICATION_FAIL(20002, "鉴权失败"),
-    TOKEN_INVALID(20004, "非法token,禁止访问"),
-    TOKEN_CHECK_FAILED(20005, "token校验异常"),
+    PERMISSION_NOT_ENOUGH(20001, "Permission_not_enough", HttpStatus.FORBIDDEN.value()),
+    AUTHENTICATION_FAILED(20002, "Authentication_failed", HttpStatus.UNAUTHORIZED.value()),
+    TOKEN_INVALID(20004, "token_invalid", HttpStatus.UNAUTHORIZED.value()),
+    TOKEN_CHECK_FAILED(20005, "token_check_failed", HttpStatus.UNAUTHORIZED.value()),
     ;
 
     private final int code;
-    private final String msg;
+    private final String desc;
+    private final int httpStatus;
 }

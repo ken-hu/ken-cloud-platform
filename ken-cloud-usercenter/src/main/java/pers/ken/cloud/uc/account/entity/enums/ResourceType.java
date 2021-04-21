@@ -1,4 +1,4 @@
-package pers.ken.cloud.uc.account.entity.cons;
+package pers.ken.cloud.uc.account.entity.enums;
 
 import com.baomidou.mybatisplus.annotation.IEnum;
 import lombok.AllArgsConstructor;

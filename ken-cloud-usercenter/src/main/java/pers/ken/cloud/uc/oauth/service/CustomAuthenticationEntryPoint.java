@@ -36,9 +36,9 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
         response.setCharacterEncoding(StandardCharsets.UTF_8.displayName());
         PrintWriter writer = response.getWriter();
         if (cause instanceof InvalidTokenException) {
-            writer.write(JSON.toJSONString(PlatformResult.custom(ServiceCode.TOKEN_INVALID,"请检查token相关信息")));
+            writer.write(JSON.toJSONString(PlatformResult.custom(ServiceCode.TOKEN_INVALID, "请检查token相关信息")));
         } else {
-            writer.write(JSON.toJSONString(PlatformResult.custom(ServiceCode.AUTHENTICATION_FAIL,"请检查token是否有权限")));
+            writer.write(JSON.toJSONString(PlatformResult.custom(ServiceCode.AUTHENTICATION_FAILED, "请检查token是否有权限")));
         }
     }
 }

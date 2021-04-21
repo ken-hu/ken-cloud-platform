@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import pers.ken.cloud.uc.account.entity.Permission;
 import pers.ken.cloud.uc.account.entity.Resource;
 import pers.ken.cloud.uc.account.entity.Role;
-import pers.ken.cloud.uc.account.entity.cons.ResourceType;
 import pers.ken.cloud.uc.account.mapper.PermissionMapper;
 import pers.ken.cloud.uc.account.service.PermissionService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Service;
 import pers.ken.cloud.uc.account.service.RoleService;
 
 import java.util.List;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -35,19 +34,20 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
     }
 
     @Override
-    public List<Permission> listByUsername(String username) {
-        List<Role> roles = roleService.listByUsername(username);
+    public List<Permission> list(Long userId) {
+        List<Role> roles = roleService.list(userId);
         return listByRoles(roles);
     }
 
     @Override
-    public void bindResources(List<Resource> resources, Long permissionId) {
-        resources.forEach(resource -> permissionMapper.insertPermissionRole(permissionId,resource.getId()));
+    public void bindPermissionResources(Long permissionId, List<Resource> resources) {
+        resources.forEach(resource -> permissionMapper.insertPermissionRole(permissionId, resource.getId()));
     }
 
     @Override
     public List<Permission> listByRoles(List<Role> roles) {
-        return permissionMapper.listPermissionByRoles(roles);
+        List<Long> roleIds = roles.stream().map(Role::getId).collect(Collectors.toList());
+        return permissionMapper.listPermissionByRoles(roleIds);
     }
 
 }

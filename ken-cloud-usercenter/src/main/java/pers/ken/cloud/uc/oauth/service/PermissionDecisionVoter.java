@@ -3,13 +3,13 @@ package pers.ken.cloud.uc.oauth.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.ConfigAttribute;
-import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.util.CollectionUtils;
-import pers.ken.cloud.uc.account.entity.Permission;
-import pers.ken.cloud.uc.account.service.PermissionService;
+import pers.ken.cloud.uc.account.entity.Resource;
+import pers.ken.cloud.uc.account.entity.enums.ResourceType;
+import pers.ken.cloud.uc.account.service.ResourceService;
 import pers.ken.cloud.uc.oauth.model.AuthUser;
 
 import java.util.Collection;
@@ -29,6 +29,14 @@ import java.util.Objects;
 public class PermissionDecisionVoter implements AccessDecisionVoter<Object> {
 
     private static final String ANONYMOUS_USER = "anonymousUser";
+    private final ResourceService resourceService;
+    private final AntPathMatcher antPathMatcher = new AntPathMatcher();
+
+    @Autowired
+    public PermissionDecisionVoter(ResourceService resourceService) {
+        this.resourceService = resourceService;
+    }
+
     @Override
     public boolean supports(ConfigAttribute attribute) {
         return Objects.nonNull(attribute.getAttribute());
@@ -40,17 +48,16 @@ public class PermissionDecisionVoter implements AccessDecisionVoter<Object> {
     }
 
     /**
-     *
-     * @param authentication
+     * @param authentication 身份信息
      * @param object
      * @param attributes
      * @return
      */
     @Override
     public int vote(Authentication authentication, Object object, Collection<ConfigAttribute> attributes) {
-        Object principal = authentication.getPrincipal();
-
-        if (ANONYMOUS_USER.equals(principal)) {
+        AuthUser authUser = (AuthUser) authentication.getPrincipal();
+        String username = authUser.getUsername();
+        if (ANONYMOUS_USER.equals(username)) {
             // 当前用户未登录，拒绝访问
             return ACCESS_DENIED;
         }
@@ -58,9 +65,14 @@ public class PermissionDecisionVoter implements AccessDecisionVoter<Object> {
         if (CollectionUtils.isEmpty(attributes)) {
             return ACCESS_DENIED;
         }
-        AuthUser authUser = (AuthUser) principal;
-        System.out.println(authUser);
-        // todo 判断权限
+        ConfigAttribute configAttribute = attributes.iterator().next();
+        List<Resource> resources = resourceService.list(authUser.getId(), ResourceType.API);
+        for (Resource resource : resources) {
+            boolean match = antPathMatcher.match(resource.getResourceKey(), configAttribute.getAttribute());
+            if (match) {
+                return ACCESS_GRANTED;
+            }
+        }
         return ACCESS_DENIED;
     }
 }

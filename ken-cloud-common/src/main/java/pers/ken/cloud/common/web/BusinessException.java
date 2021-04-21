@@ -1,7 +1,6 @@
 package pers.ken.cloud.common.web;
 
 import lombok.Getter;
-import org.springframework.http.HttpStatus;
 
 /**
  * <code>BusinessException</code>
@@ -14,8 +13,30 @@ import org.springframework.http.HttpStatus;
  */
 @Getter
 public class BusinessException extends RuntimeException{
-    private int code;
-    private String msg;
+    private static final long serialVersionUID = -6621600607198714035L;
     private ServiceCode serviceCode;
-    private HttpStatus httpStatus;
+
+    public BusinessException(ServiceCode serviceCode) {
+        this.serviceCode = serviceCode;
+    }
+
+    public BusinessException(String message, ServiceCode serviceCode) {
+        super(message);
+        this.serviceCode = serviceCode;
+    }
+
+    public BusinessException(String message, Throwable cause, ServiceCode serviceCode) {
+        super(message, cause);
+        this.serviceCode = serviceCode;
+    }
+
+    public BusinessException(Throwable cause, ServiceCode serviceCode) {
+        super(cause);
+        this.serviceCode = serviceCode;
+    }
+
+    public BusinessException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace, ServiceCode serviceCode) {
+        super(message, cause, enableSuppression, writableStackTrace);
+        this.serviceCode = serviceCode;
+    }
 }

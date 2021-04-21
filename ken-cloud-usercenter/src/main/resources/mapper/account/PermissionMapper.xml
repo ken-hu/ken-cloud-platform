@@ -18,12 +18,19 @@
         values (#{permissionId}, #{resourceId})
     </insert>
     <select id="listPermissionByRoles" resultType="pers.ken.cloud.uc.account.entity.Permission">
-        select * from db_usercenter.t_uc_permission where id in (select * from db_usercenter.t_uc_role_permission_rel
-        where role_id in (
-        <foreach item="item" collection="list" index="index" open="(" separator="," close=")">
-            #{item.id}
-        </foreach>
-        ))
+        select * from db_usercenter.t_uc_permission tup join db_usercenter.t_uc_role_permission_rel turpr
+        where tup.id = turpr.permission_id
+        <choose>
+            <when test="roleIds != null and roleIds.size > 0">
+                and turpr.role_id in
+                <foreach item="id" collection="roleIds" index="index" open="(" separator="," close=")">
+                    #{id}
+                </foreach>
+            </when>
+            <otherwise>
+                AND 1=0
+            </otherwise>
+        </choose>
     </select>
 
 </mapper>

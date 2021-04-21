@@ -32,9 +32,9 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     }
 
     @Override
-    public List<Role> listByUsername(String username) {
-        User user = userService.get(username);
-        Assert.notNull(user,"Can not found user by:"+ username);
+    public List<Role> list(Long userId) {
+        User user = userService.getById(userId);
+        Assert.notNull(user, "Can not found user by userId:" + userId);
         return roleMapper.selectAllByUserId(user.getId());
     }
 }

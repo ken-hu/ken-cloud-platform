@@ -16,8 +16,18 @@ import java.util.List;
  */
 public interface UserService extends IService<User>  {
 
+    /**
+     * 获取用户信息
+     * @param username 用户名
+     * @return 用户信息
+     */
     User get(String username);
 
+    /**
+     * 用户绑定角色
+     * @param userId 用户Id
+     * @param roles 角色Id
+     */
     void bindUserRole(Long userId, List<Role> roles);
 
 }

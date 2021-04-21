@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import pers.ken.cloud.uc.account.entity.Permission;
-import pers.ken.cloud.uc.account.entity.Role;
 
 import java.util.List;
 
@@ -27,8 +26,8 @@ public interface PermissionMapper extends BaseMapper<Permission> {
 
     /**
      * 通过角色寻找权限集合
-     * @param roles 角色集合
+     * @param roleIds 角色集合
      * @return
      */
-    List<Permission> listPermissionByRoles(List<Role> roles);
+    List<Permission> listPermissionByRoles(@Param("roleIds") List<Long> roleIds);
 }

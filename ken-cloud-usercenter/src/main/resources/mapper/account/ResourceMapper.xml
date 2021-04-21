@@ -16,12 +16,19 @@
         <result column="update_user" property="updateUser"/>
     </resultMap>
     <select id="selectAllByPermissions" resultType="pers.ken.cloud.uc.account.entity.Resource">
-        select * from db_usercenter.t_uc_role where id in (select role_id from db_usercenter.t_uc_role_permission_rel
-        where permission_id in (
-        <foreach item="item" collection="list" index="index" open="(" separator="," close=")">
-            #{item}
-        </foreach>
-        ))
+        select * from db_usercenter.t_uc_resource tur join db_usercenter.t_uc_permission_resource_rel tuprr
+        on tur.id = tuprr.resource_id
+        <choose>
+            <when test="permissionIds != null and permissionIds.size > 0">
+                and tuprr.permission_id in
+                <foreach item="id" collection="permissionIds" index="index" open="(" separator="," close=")">
+                    #{id}
+                </foreach>
+            </when>
+            <otherwise>
+                and 1=0
+            </otherwise>
+        </choose>
     </select>
 
 </mapper>

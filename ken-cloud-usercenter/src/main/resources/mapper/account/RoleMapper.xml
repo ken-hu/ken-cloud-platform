@@ -20,7 +20,19 @@
     <select id="selectAllByUserId" resultType="pers.ken.cloud.uc.account.entity.Role">
         select *
         from db_usercenter.t_uc_role
-        where id in (select role_id from db_usercenter.t_uc_user_role_rel where user_id = #{userId})
+        where id in (
+        select role_id from db_usercenter.t_uc_user_role_rel
+        <where>
+            <choose>
+                <when test="userId !=null and userId !=''">
+                    user_id = #{userId}
+                </when>
+                <otherwise>
+                    and 1=0
+                </otherwise>
+            </choose>
+        </where>
+        )
     </select>
 
 </mapper>

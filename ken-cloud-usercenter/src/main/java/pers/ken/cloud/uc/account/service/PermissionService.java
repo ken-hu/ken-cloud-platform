@@ -4,10 +4,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import pers.ken.cloud.uc.account.entity.Permission;
 import pers.ken.cloud.uc.account.entity.Resource;
 import pers.ken.cloud.uc.account.entity.Role;
-import pers.ken.cloud.uc.account.entity.cons.ResourceType;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * <p>
@@ -18,10 +16,25 @@ import java.util.Set;
  * @since 2021-04-11
  */
 public interface PermissionService extends IService<Permission> {
-    List<Permission> listByUsername(String username);
+    /**
+     * 查询用户权限集
+     * @param userId 用户id
+     * @return 权限集
+     */
+    List<Permission> list(Long userId);
 
-    void bindResources(List<Resource> resources,Long permissionId);
+    /**
+     * 绑定权限资源集
+     * @param permissionId
+     * @param resources
+     */
+    void bindPermissionResources(Long permissionId,List<Resource> resources);
 
+    /**
+     * 查询角色权限集
+     * @param roles 角色集
+     * @return
+     */
     List<Permission> listByRoles(List<Role> roles);
 
 }

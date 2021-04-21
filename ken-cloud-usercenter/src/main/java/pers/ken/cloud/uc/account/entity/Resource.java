@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import pers.ken.cloud.uc.account.entity.cons.ResourceType;
+import pers.ken.cloud.uc.account.entity.enums.ResourceType;
 
 import java.io.Serializable;
 import java.util.Date;
