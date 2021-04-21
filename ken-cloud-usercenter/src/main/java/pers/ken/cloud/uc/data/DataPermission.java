@@ -1,9 +1,6 @@
-package pers.ken.cloud.uc.oauth;
+package pers.ken.cloud.uc.data;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
 /**
  * <code>DataPermission</code>
@@ -16,6 +13,13 @@ import java.lang.annotation.Target;
  */
 @Target({ElementType.METHOD,ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
+@Documented
 public @interface DataPermission {
     String name() default "";
+
+    String desc() default "data permission default desc";
+
+    String ruleMeta() default "";
+
+    String[] ruleMetas() default {};
 }

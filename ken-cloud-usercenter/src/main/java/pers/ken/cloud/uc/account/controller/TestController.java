@@ -1,10 +1,11 @@
 package pers.ken.cloud.uc.account.controller;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pers.ken.cloud.common.web.ServiceCode;
-import pers.ken.cloud.uc.oauth.DataPermission;
+import pers.ken.cloud.uc.data.DataPermission;
 
 /**
  * <code>TestController</code>
@@ -18,7 +19,7 @@ import pers.ken.cloud.uc.oauth.DataPermission;
 @RestController
 public class TestController {
 
-    @DataPermission(name = "just...")
+    @DataPermission(ruleMeta = "#test", name = "测试数据权限", desc = "描述信息")
     @GetMapping(value = "/test", produces = MediaType.APPLICATION_JSON_VALUE)
     public String test(String test) {
         return test;
@@ -28,7 +29,7 @@ public class TestController {
     public String okokok(String ok) {
         ServiceCode success = ServiceCode.SUCCESS;
         System.out.println("XXXXXXXXXXXXX" + success.getCode());
-        System.out.println("XXXXXXXXXXXXX" + success.getDesc());
+        System.out.println("XXXXXXXXXXXXX" + success.getMsg());
         return ok;
     }
 }

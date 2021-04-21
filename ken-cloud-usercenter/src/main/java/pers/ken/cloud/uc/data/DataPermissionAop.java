@@ -1,4 +1,4 @@
-package pers.ken.cloud.uc.oauth;
+package pers.ken.cloud.uc.data;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.javassist.*;
@@ -14,6 +14,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Component;
+import pers.ken.cloud.uc.data.DataPermission;
 
 import java.lang.reflect.Method;
 import java.util.Collection;
@@ -34,7 +35,7 @@ import java.util.Map;
 @Slf4j
 @EnableAspectJAutoProxy
 public class DataPermissionAop {
-    @Pointcut("@annotation(pers.ken.cloud.uc.oauth.DataPermission)")
+    @Pointcut("@annotation(pers.ken.cloud.uc.data.DataPermission)")
     private void pointcut() {
     }
 
