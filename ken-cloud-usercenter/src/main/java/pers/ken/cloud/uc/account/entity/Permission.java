@@ -41,7 +41,7 @@ public class Permission extends Model<Permission> {
     /**
      * 描述
      */
-    @TableField("desc")
+    @TableField("`desc`")
     private String desc;
 
     /**

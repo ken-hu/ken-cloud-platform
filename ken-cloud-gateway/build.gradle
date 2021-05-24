@@ -10,10 +10,11 @@ group 'pers.ken.cloud'
 version '0.0.1-SNAPSHOT'
 
 dependencies {
+    compile project(':ken-cloud-common-model')
     compile 'org.springframework.boot:spring-boot-starter-web'
-    compile('org.springframework.cloud:spring-cloud-starter-gateway') {
+    compile('org.springframework.cloud:spring-cloud-starter-gateway') /*{
         exclude(group: 'org.springframework.boot', module: 'spring-boot-starter-webflux')
-    }
+    }*/
 //    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
 }
 

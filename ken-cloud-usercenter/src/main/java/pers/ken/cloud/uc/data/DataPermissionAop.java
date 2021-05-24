@@ -1,25 +1,21 @@
 package pers.ken.cloud.uc.data;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.javassist.*;
-import org.apache.ibatis.javassist.bytecode.CodeAttribute;
-import org.apache.ibatis.javassist.bytecode.LocalVariableAttribute;
-import org.apache.ibatis.javassist.bytecode.MethodInfo;
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.expression.EvaluationContext;
+import org.springframework.expression.Expression;
+import org.springframework.expression.spel.SpelNode;
+import org.springframework.expression.spel.standard.SpelExpression;
+import org.springframework.expression.spel.standard.SpelExpressionParser;
+import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.stereotype.Component;
-import pers.ken.cloud.uc.data.DataPermission;
 
-import java.lang.reflect.Method;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.IntStream;
 
 /**
  * <code>DataPermissionAop</code>
@@ -35,68 +31,38 @@ import java.util.Map;
 @Slf4j
 @EnableAspectJAutoProxy
 public class DataPermissionAop {
-    @Pointcut("@annotation(pers.ken.cloud.uc.data.DataPermission)")
-    private void pointcut() {
-    }
+    private final SpelExpressionParser spelParser = new SpelExpressionParser();
 
-    @Around("pointcut()")
-    public Object aroundAdvice(ProceedingJoinPoint joinPoint) throws Throwable {
-        DataPermission annotation = getCustomAnnotation(joinPoint);
-        Signature signature = joinPoint.getSignature();
-        String classType = joinPoint.getTarget().getClass().getName();
-        Class<?> clazz = Class.forName(classType);
-        String clazzName = clazz.getName();
-        String methodName = joinPoint.getSignature().getName();
-        Object[] args = joinPoint.getArgs();
-        Map<String, Object> nameAndArgs = getFieldsName(this.getClass(), clazzName, methodName, args);
-        /*if (needControl(annotation)) {
-            Object[] args = joinPoint.getArgs();
-            for (Object arg : args) {
-                String s = arg.toString();
-                log.info("arg name : {} ", s);
-            }
-        }*/
-        System.out.println(nameAndArgs);
-        nameAndArgs.put("test", "中文测试");
-        Collection<Object> values = nameAndArgs.values();
-        return joinPoint.proceed(values.toArray(new Object[0]));
-    }
-
-    private boolean needControl(DataPermission dataPermission) {
-        return dataPermission != null;
-    }
-
-    private DataPermission getCustomAnnotation(JoinPoint joinPoint) {
-        Signature signature = joinPoint.getSignature();
-        MethodSignature methodSignature = (MethodSignature) signature;
-        Method method = methodSignature.getMethod();
-        if (method != null) {
-            return method.getAnnotation(DataPermission.class);
+    private final Map<String, String> testPermission = new HashMap<>();
+    private final static Map<String, String> TEST_PERMISSIONS = new HashMap<>();
+    @Around("@annotation(dataPermission))")
+    public Object aroundAdvice(ProceedingJoinPoint joinPoint,DataPermission dataPermission) throws Throwable {
+        TEST_PERMISSIONS.put("channelId", "1");
+        TEST_PERMISSIONS.put("user_id", "1");
+        TEST_PERMISSIONS.put("dept", "销售部,采购部");
+        // todo 通过 dataPermission 获取相关的入参信息
+        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+        List<String> paramNameList = Arrays.asList(methodSignature.getParameterNames());
+        List<Object> paramValueList = Arrays.asList(joinPoint.getArgs());
+        // 获取规则辕信息
+        String[] ruleMetas = dataPermission.ruleMetas();
+        Map<String, String> scopeInfo = new HashMap<>(paramNameList.size());
+        for (String ruleMeta : ruleMetas) {
+            // 通过spel表达式和反射解析入参
+            EvaluationContext ctx = new StandardEvaluationContext();
+            IntStream.range(0, paramNameList.size())
+                    .forEach(i -> ctx.setVariable(paramNameList.get(i), paramValueList.get(i)));
+            Expression expression = spelParser.parseExpression(ruleMeta);
+            Collection<String> collection = (Collection<String>)Objects.requireNonNull(expression.getValue(ctx, Collection.class));
+            scopeInfo.put(ruleMeta, collection.toString());
         }
-        return null;
-    }
 
-    private Map<String, Object> getFieldsName(Class cls, String clazzName, String methodName, Object[] args) throws NotFoundException {
-        Map<String, Object> map = new HashMap<String, Object>();
+        // 查询当前用户是否具有这些规则元信息的权限
 
-        ClassPool pool = ClassPool.getDefault();
-        //ClassClassPath classPath = new ClassClassPath(this.getClass());
-        ClassClassPath classPath = new ClassClassPath(cls);
-        pool.insertClassPath(classPath);
+        // 没有则抛出异常信息 全局异常返回
 
-        CtClass cc = pool.get(clazzName);
-        CtMethod cm = cc.getDeclaredMethod(methodName);
-        MethodInfo methodInfo = cm.getMethodInfo();
-        CodeAttribute codeAttribute = methodInfo.getCodeAttribute();
-        LocalVariableAttribute attr = (LocalVariableAttribute) codeAttribute.getAttribute(LocalVariableAttribute.tag);
-        if (attr == null) {
-            // exception
-        }
-        // String[] paramNames = new String[cm.getParameterTypes().length];
-        int pos = Modifier.isStatic(cm.getModifiers()) ? 0 : 1;
-        for (int i = 0; i < cm.getParameterTypes().length; i++) {
-            map.put(attr.variableName(i + pos), args[i]);//paramNames即参数名
-        }
-        return map;
+        // 自定义规则元信息把信息解析然后利用mybatisPlugin拼接SQL查询
+
+        return joinPoint.proceed();
     }
 }

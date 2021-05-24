@@ -41,7 +41,7 @@ public class Role extends Model<Role> {
     /**
      * 描述
      */
-    @TableField("desc")
+    @TableField("`desc`")
     private String desc;
 
     /**

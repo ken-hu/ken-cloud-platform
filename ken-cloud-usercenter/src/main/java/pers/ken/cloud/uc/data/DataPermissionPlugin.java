@@ -20,7 +20,7 @@ import java.util.Properties;
 /**
  * <code>DataPermissionPlugin</code>
  * <desc>
- * 描述：
+ * 描述：TODO 自定义规则的时候才使用
  * <desc/>
  * <b>Creation Time:</b> 2021/4/21 21:19.
  *
@@ -64,7 +64,7 @@ public class DataPermissionPlugin implements Interceptor {
                 DataPermission interceptorAnnotation = method.getAnnotation(DataPermission.class);
                 if (null != interceptorAnnotation) {
                     //可以在此处修改sql，用字符串拼接即可
-                    mSql = "select * from ("+sql+") user " + " order by create_time";
+                    mSql = "select * from ("+sql+") user " + " order by id";
                 }
             }
         }
