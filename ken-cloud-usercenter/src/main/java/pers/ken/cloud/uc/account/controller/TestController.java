@@ -38,7 +38,7 @@ public class TestController {
         return test;
     }
 
-    @DataPermission(ruleMetas = {"#ok","#channelId","#userId","#dept"}, name = "测试数据权限", desc = "描述信息")
+//    @DataPermission(ruleMetas = {"#ok","#channelId","#userId","#dept"}, name = "测试数据权限", desc = "描述信息")
     @GetMapping(value = "/okokok", produces = MediaType.APPLICATION_JSON_VALUE)
     public String okokok(@RequestParam String ok, @RequestParam String channelId, @RequestParam String userId, @RequestParam List<String> dept) {
         ServiceCode success = ServiceCode.SUCCESS;

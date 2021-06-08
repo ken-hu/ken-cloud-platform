@@ -6,6 +6,7 @@ import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
 
 /**
@@ -22,7 +23,10 @@ public class PermissionSecurityMetadataSource implements FilterInvocationSecurit
     @Override
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
         FilterInvocation filterInvocation = (FilterInvocation) object;
-        String requestUri = filterInvocation.getHttpRequest().getRequestURI();
+        // 获取URI 供PermissionDecisionVoter判断是否允许访问
+        HttpServletRequest httpRequest = filterInvocation.getHttpRequest();
+        String requestUri = httpRequest.getRequestURI();
+        String method = httpRequest.getMethod();
         return SecurityConfig.createList(requestUri);
     }
 

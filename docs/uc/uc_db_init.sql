@@ -162,3 +162,19 @@ CREATE TABLE `t_uc_permission_resource_rel`
     `resource_id`   bigint(20) NULL COMMENT '资源'
 ) ENGINE = INNODB ,
   DEFAULT CHARSET = utf8 ,COMMENT '权限资源关联表';
+
+DROP TABLE IF EXISTS `t_uc_enterprise`;
+CREATE TABLE `t_uc_enterprise`
+(
+    `id`          bigint(20)  NOT NULL COMMENT '主键',
+    `name`        varchar(50) NOT NULL COMMENT '企业名称'
+) ENGINE = INNODB ,
+  DEFAULT CHARSET = utf8 ,COMMENT '企业信息';
+
+DROP TABLE IF EXISTS `t_uc_app`;
+CREATE TABLE `t_uc_app`
+(
+    `id`          bigint(20)  NOT NULL COMMENT '主键',
+    `name`        varchar(50) NOT NULL COMMENT '应用名称'
+) ENGINE = INNODB ,
+  DEFAULT CHARSET = utf8 ,COMMENT '应用信息';

@@ -10,4 +10,5 @@ repositories {
 }
 
 dependencies {
+    compile project(':ken-cloud-common-model')
 }

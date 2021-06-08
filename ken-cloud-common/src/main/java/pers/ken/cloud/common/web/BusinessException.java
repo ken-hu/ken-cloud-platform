@@ -12,9 +12,9 @@ import lombok.Getter;
  * @author _Ken.Hu
  */
 @Getter
-public class BusinessException extends RuntimeException{
+public abstract class BusinessException extends RuntimeException{
     private static final long serialVersionUID = -6621600607198714035L;
-    private ServiceCode serviceCode;
+    private final ServiceCode serviceCode;
 
     public BusinessException(ServiceCode serviceCode) {
         this.serviceCode = serviceCode;

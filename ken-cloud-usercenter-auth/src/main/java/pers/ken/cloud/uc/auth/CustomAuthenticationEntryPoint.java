@@ -1,6 +1,7 @@
-package pers.ken.cloud.uc.oauth.service;
+package pers.ken.cloud.uc.auth;
 
 import com.alibaba.fastjson.JSON;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;
@@ -26,10 +27,13 @@ import java.nio.charset.StandardCharsets;
  *
  * @author _Ken.Hu
  */
+@Slf4j
 @Component
 public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+        log.error("Occur AuthenticationException", authException);
+
         Throwable cause = authException.getCause();
         response.setStatus(HttpStatus.OK.value());
         response.setHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE);

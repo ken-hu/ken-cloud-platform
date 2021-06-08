@@ -12,13 +12,13 @@ repositories {
 dependencies {
     testCompile 'org.apache.velocity:velocity-engine-core:2.3'
     testCompile "com.baomidou:mybatis-plus-generator:${mybatisPlusVersion}"
+    compile project(':ken-cloud-common-model')
     runtime 'mysql:mysql-connector-java'
     compile 'org.springframework.boot:spring-boot-starter-actuator'
     compile "com.baomidou:mybatis-plus-boot-starter:${mybatisPlusVersion}"
     compile "com.google.guava:guava:${guavaVersion}"
     compile 'com.alibaba:fastjson:1.2.76'
     compile 'org.springframework.boot:spring-boot-starter-web'
-    compile 'org.springframework.boot:spring-boot-devtools'
 }
 
 test {

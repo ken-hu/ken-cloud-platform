@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -15,8 +14,10 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.token.*;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import pers.ken.cloud.uc.auth.CustomAccessDeniedHandler;
+import pers.ken.cloud.uc.auth.CustomAuthenticationEntryPoint;
 import pers.ken.cloud.uc.oauth.service.*;
+import pers.ken.cloud.uc.oauth.service.AuthUserDetailsServiceImpl;
 
 import javax.sql.DataSource;
 import java.util.Arrays;
@@ -41,9 +42,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
     private final CustomWebResponseExceptionTranslator customWebResponseExceptionTranslator;
     private final PasswordEncoder passwordEncoder;
+    private final TokenStore tokenStore;
+    private final JwtAccessTokenConverter jwtAccessTokenConverter;
 
     @Autowired
-    public AuthorizationServerConfig(AuthenticationManager authenticationManager, AuthUserDetailsServiceImpl authUserDetailsService, ClientDetailsService clientDetailsService, DataSource dataSource, CustomAccessDeniedHandler customAccessDeniedHandler, CustomAuthenticationEntryPoint customAuthenticationEntryPoint, CustomWebResponseExceptionTranslator customWebResponseExceptionTranslator, PasswordEncoder passwordEncoder) {
+    public AuthorizationServerConfig(AuthenticationManager authenticationManager, AuthUserDetailsServiceImpl authUserDetailsService, ClientDetailsService clientDetailsService, DataSource dataSource, CustomAccessDeniedHandler customAccessDeniedHandler, CustomAuthenticationEntryPoint customAuthenticationEntryPoint, CustomWebResponseExceptionTranslator customWebResponseExceptionTranslator, PasswordEncoder passwordEncoder, TokenStore tokenStore, JwtAccessTokenConverter jwtAccessTokenConverter) {
         this.authenticationManager = authenticationManager;
         this.authUserDetailsService = authUserDetailsService;
         this.clientDetailsService = clientDetailsService;
@@ -52,28 +55,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         this.customAuthenticationEntryPoint = customAuthenticationEntryPoint;
         this.customWebResponseExceptionTranslator = customWebResponseExceptionTranslator;
         this.passwordEncoder = passwordEncoder;
+        this.tokenStore = tokenStore;
+        this.jwtAccessTokenConverter = jwtAccessTokenConverter;
     }
 
-    @Bean
-    public JwtAccessTokenConverter jwtAccessTokenConverter(UserDetailsService userDetailsService) {
-        DefaultUserAuthenticationConverter defaultUserAuthenticationConverter = new DefaultUserAuthenticationConverter();
-        defaultUserAuthenticationConverter.setUserDetailsService(userDetailsService);
-
-        DefaultAccessTokenConverter defaultAccessTokenConverter = new DefaultAccessTokenConverter();
-        defaultAccessTokenConverter.setUserTokenConverter(defaultUserAuthenticationConverter);
-
-        JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
-        jwtAccessTokenConverter.setAccessTokenConverter(defaultAccessTokenConverter);
-        // jwt使用这个key来签名，验证token的服务也使用这个key来验签
-        jwtAccessTokenConverter.setSigningKey("_ken.hu");
-        return jwtAccessTokenConverter;
-    }
-
-    @Bean
-    public TokenStore tokenStore(UserDetailsService userDetailsService) {
-        //基于JwtToken认证
-        return new JwtTokenStore(jwtAccessTokenConverter(userDetailsService));
-    }
 
     /**
      * token信息增强
@@ -128,7 +113,13 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .withClient("usercenter")
                 .scopes("all")
                 .secret(passwordEncoder.encode("123456"))
-                .resourceIds("usercenter")
+                .resourceIds("usercenter","estore")
+                .authorizedGrantTypes("password", "authorization_code", "refresh_token","client_credentials")
+                .and()
+                .withClient("estore")
+                .scopes("all")
+                .secret(passwordEncoder.encode("123456"))
+                .resourceIds("usercenter","estore")
                 .authorizedGrantTypes("password", "authorization_code", "refresh_token","client_credentials")
                 ;
     }
@@ -139,12 +130,13 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         TokenEnhancerChain enhancerChain = new TokenEnhancerChain();
-        enhancerChain.setTokenEnhancers(Arrays.asList(authTokenEnhancer(), jwtAccessTokenConverter(authUserDetailsService)));
+        enhancerChain.setTokenEnhancers(Arrays.asList(authTokenEnhancer(),jwtAccessTokenConverter));
         endpoints
                 .authenticationManager(authenticationManager)
                 .userDetailsService(authUserDetailsService)
-                .accessTokenConverter(jwtAccessTokenConverter(authUserDetailsService))
-                .tokenStore(tokenStore(authUserDetailsService))
+//                .accessTokenConverter(jwtAccessTokenConverter(authUserDetailsService))
+                .tokenStore(tokenStore)
+                .accessTokenConverter(jwtAccessTokenConverter)
                 .tokenEnhancer(enhancerChain)
                 .exceptionTranslator(customWebResponseExceptionTranslator)
                 .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);

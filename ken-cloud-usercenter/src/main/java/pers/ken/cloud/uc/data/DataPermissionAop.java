@@ -8,8 +8,6 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.Expression;
-import org.springframework.expression.spel.SpelNode;
-import org.springframework.expression.spel.standard.SpelExpression;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.stereotype.Component;
@@ -33,10 +31,10 @@ import java.util.stream.IntStream;
 public class DataPermissionAop {
     private final SpelExpressionParser spelParser = new SpelExpressionParser();
 
-    private final Map<String, String> testPermission = new HashMap<>();
     private final static Map<String, String> TEST_PERMISSIONS = new HashMap<>();
+
     @Around("@annotation(dataPermission))")
-    public Object aroundAdvice(ProceedingJoinPoint joinPoint,DataPermission dataPermission) throws Throwable {
+    public Object aroundAdvice(ProceedingJoinPoint joinPoint, DataPermission dataPermission) throws Throwable {
         TEST_PERMISSIONS.put("channelId", "1");
         TEST_PERMISSIONS.put("user_id", "1");
         TEST_PERMISSIONS.put("dept", "销售部,采购部");
@@ -44,7 +42,7 @@ public class DataPermissionAop {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         List<String> paramNameList = Arrays.asList(methodSignature.getParameterNames());
         List<Object> paramValueList = Arrays.asList(joinPoint.getArgs());
-        // 获取规则辕信息
+        // 获取规则元信息
         String[] ruleMetas = dataPermission.ruleMetas();
         Map<String, String> scopeInfo = new HashMap<>(paramNameList.size());
         for (String ruleMeta : ruleMetas) {
@@ -53,11 +51,11 @@ public class DataPermissionAop {
             IntStream.range(0, paramNameList.size())
                     .forEach(i -> ctx.setVariable(paramNameList.get(i), paramValueList.get(i)));
             Expression expression = spelParser.parseExpression(ruleMeta);
-            Collection<String> collection = (Collection<String>)Objects.requireNonNull(expression.getValue(ctx, Collection.class));
+            Collection<String> collection = (Collection<String>) Objects.requireNonNull(expression.getValue(ctx, Collection.class));
             scopeInfo.put(ruleMeta, collection.toString());
         }
-
         // 查询当前用户是否具有这些规则元信息的权限
+        log.info("Current User scopeInfo:{}", scopeInfo);
 
         // 没有则抛出异常信息 全局异常返回
 

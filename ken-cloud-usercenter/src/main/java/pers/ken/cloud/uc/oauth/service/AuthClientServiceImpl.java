@@ -7,7 +7,7 @@ import org.springframework.security.oauth2.provider.ClientRegistrationException;
 import org.springframework.stereotype.Component;
 import pers.ken.cloud.uc.account.entity.ClientDetail;
 import pers.ken.cloud.uc.account.service.ClientDetailService;
-import pers.ken.cloud.uc.oauth.model.AuthClientDetail;
+import pers.ken.cloud.uc.auth.model.AuthClientDetail;
 
 /**
  * <code>AuthClientService</code>

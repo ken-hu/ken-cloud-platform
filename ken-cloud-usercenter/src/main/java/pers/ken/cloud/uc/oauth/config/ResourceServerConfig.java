@@ -20,7 +20,10 @@ import org.springframework.security.oauth2.provider.expression.OAuth2WebSecurity
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.web.access.expression.WebExpressionVoter;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
-import pers.ken.cloud.uc.oauth.service.*;
+import pers.ken.cloud.uc.auth.CustomAccessDeniedHandler;
+import pers.ken.cloud.uc.auth.CustomAuthenticationEntryPoint;
+import pers.ken.cloud.uc.oauth.service.PermissionDecisionVoter;
+import pers.ken.cloud.uc.oauth.service.PermissionSecurityMetadataSource;
 
 /**
  * <code>ResourceServerConfig</code>
@@ -99,7 +102,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .tokenStore(tokenStore)
                 .resourceId(resourceId)
                 .authenticationEntryPoint(customAuthenticationEntryPoint)
-        .accessDeniedHandler(customAccessDeniedHandler);
+                .accessDeniedHandler(customAccessDeniedHandler);
     }
 
 

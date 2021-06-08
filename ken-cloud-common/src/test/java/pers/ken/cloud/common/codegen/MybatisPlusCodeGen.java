@@ -31,15 +31,13 @@ public class MybatisPlusCodeGen {
      */
     private static final String AUTH = "_Ken.Hu";
     private static final String[] TABLES = new String[]{
-            "t_uc_role",
-            "t_uc_resource",
-            "t_uc_permission"
+            "t_uc_enterprise"
     };
     private static final String TABLE_PREFIX = "t_uc";
     private static final String FILE_OUTPUT_DIR =
             System.getProperty("user.dir") + File.separator + "ken-cloud-usercenter";
     private static final String PARENT_PACKAGE = "pers.ken.cloud.uc";
-    private static final String MODULE_NAME = "account";
+    private static final String MODULE_NAME = "enterprise";
 
     /**
      * GENERATOR

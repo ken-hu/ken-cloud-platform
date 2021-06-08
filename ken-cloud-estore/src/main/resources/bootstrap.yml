@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: estore
+  cloud:
+    nacos:
+      server-addr: 172.18.5.202:8848
+      discovery:
+        server-addr: 172.18.5.202:8848
+        group: KEN_GROUP
+logging:
+  level:
+    root: info

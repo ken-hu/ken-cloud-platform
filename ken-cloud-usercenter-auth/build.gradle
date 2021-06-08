@@ -1,0 +1,19 @@
+plugins {
+    id 'java'
+}
+
+group 'pers.ken.cloud'
+version '0.0.1-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile project(':ken-cloud-common')
+    compile 'org.springframework.cloud:spring-cloud-starter-oauth2'
+}
+
+test {
+    useJUnitPlatform()
+}

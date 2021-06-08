@@ -1,6 +1,8 @@
-package pers.ken.cloud.uc.oauth;
+package pers.ken.cloud.uc.auth;
 
 import lombok.Data;
+
+import java.util.Map;
 
 /**
  * <code>OauthUser</code>
@@ -15,6 +17,5 @@ import lombok.Data;
 public class OauthUser {
     private Long id;
     private String username;
-    private String password;
-
+    private Map<String,String> extInfo;
 }

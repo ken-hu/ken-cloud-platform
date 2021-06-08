@@ -1,4 +1,4 @@
-package pers.ken.cloud.uc.oauth.model;
+package pers.ken.cloud.uc.auth.model;
 
 import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.client.BaseClientDetails;
