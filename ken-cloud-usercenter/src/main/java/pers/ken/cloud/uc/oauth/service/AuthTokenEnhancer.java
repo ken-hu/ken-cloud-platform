@@ -1,9 +1,12 @@
 package pers.ken.cloud.uc.oauth.service;
 
+import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
-import pers.ken.cloud.uc.auth.model.AuthUser;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * <code>AuthTokenEnhancer</code>
@@ -17,8 +20,10 @@ import pers.ken.cloud.uc.auth.model.AuthUser;
 public class AuthTokenEnhancer implements TokenEnhancer {
     @Override
     public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
-        AuthUser securityUser = (AuthUser) authentication.getPrincipal();
-        System.out.println(securityUser);
+//        AuthUser securityUser = (AuthUser) authentication.getPrincipal();
+        Map<String, Object> info = new HashMap<>();
+        info.put("jwt-ext", "JWT 扩展信息");
+        ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(info);
         // todo 增强token信息存储
         return accessToken;
     }

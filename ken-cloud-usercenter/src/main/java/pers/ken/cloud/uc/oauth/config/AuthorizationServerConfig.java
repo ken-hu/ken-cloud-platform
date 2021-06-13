@@ -14,8 +14,8 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.token.*;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import pers.ken.cloud.uc.auth.CustomAccessDeniedHandler;
-import pers.ken.cloud.uc.auth.CustomAuthenticationEntryPoint;
+import pers.ken.cloud.uc.oauth.CustomAccessDeniedHandler;
+import pers.ken.cloud.uc.oauth.CustomAuthenticationEntryPoint;
 import pers.ken.cloud.uc.oauth.service.*;
 import pers.ken.cloud.uc.oauth.service.AuthUserDetailsServiceImpl;
 

@@ -5,13 +5,12 @@ import org.springframework.security.access.AccessDecisionVoter;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
-import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.CollectionUtils;
 import pers.ken.cloud.uc.account.entity.Resource;
 import pers.ken.cloud.uc.account.entity.enums.ResourceType;
 import pers.ken.cloud.uc.account.service.ResourceService;
-import pers.ken.cloud.uc.auth.model.AuthUser;
+import pers.ken.cloud.uc.oauth.model.AuthUser;
 
 import java.util.Collection;
 import java.util.List;
@@ -26,7 +25,7 @@ import java.util.Objects;
  *
  * @author _Ken.Hu
  */
-@Component
+//@Component
 public class PermissionDecisionVoter implements AccessDecisionVoter<Object> {
 
     private static final String ANONYMOUS_USER = "anonymousUser";
@@ -63,6 +62,7 @@ public class PermissionDecisionVoter implements AccessDecisionVoter<Object> {
 
         if (authentication instanceof OAuth2Authentication) {
             OAuth2Authentication oAuth2Authentication = (OAuth2Authentication) authentication;
+            System.out.println(oAuth2Authentication.getPrincipal());
             AuthUser authUser = (AuthUser) oAuth2Authentication.getPrincipal();
             if (CollectionUtils.isEmpty(attributes)) {
                 return ACCESS_DENIED;

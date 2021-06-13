@@ -18,7 +18,7 @@ import java.util.Collection;
  *
  * @author _Ken.Hu
  */
-@Component
+//@Component
 public class PermissionSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
     @Override
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {

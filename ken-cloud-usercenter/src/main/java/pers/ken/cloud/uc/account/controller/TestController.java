@@ -1,16 +1,14 @@
 package pers.ken.cloud.uc.account.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import pers.ken.cloud.common.web.ServiceCode;
+import pers.ken.cloud.common.model.ServiceCode;
 import pers.ken.cloud.uc.account.entity.Resource;
 import pers.ken.cloud.uc.account.mapper.ResourceMapper;
-import pers.ken.cloud.uc.data.DataPermission;
 
 import java.util.List;
 

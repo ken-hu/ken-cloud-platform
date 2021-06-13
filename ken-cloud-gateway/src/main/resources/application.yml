@@ -1,23 +1,39 @@
-
 server:
   port: 38080
 spring:
   application:
     name: gateway
-#  cloud:
-#    gateway:
-#      routes:
-#        - id: backend-service
-#          uri: lb://backend-service
-#          predicates:
-#            - Path=/backend/**
-#          filters:
-#            - StripPrefix=1
-#logging:
-#  file:
-#    path: ${user.home}/logs
-#management:
-#  endpoints:
-#    web:
-#      exposure:
-#        include: "loggers,health"
+  cloud:
+    gateway:
+      routes:
+        - id: usercenter
+          uri: lb://usercenter
+          predicates:
+            - Path=/uc/**
+          filters:
+            - StripPrefix=1
+        - id: estore
+          uri: lb://estore
+          predicates:
+            - Path=/estore/**
+          filters:
+            - StripPrefix=1
+security:
+  oauth2:
+    client:
+      client-id: ${spring.application.name}
+      client-secret: 123456
+      user-authorization-uri: http://localhost:8888/oauth/authorize
+      access-token-uri: http://localhost:8888/oauth/token
+    resource:
+      id: ${spring.application.name}
+      user-info-uri: user-info
+    authorization:
+      check-token-access: http://localhost:8888/oauth/check_token
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "loggers,health"
+oauth2:
+  whitelist-urls: /user

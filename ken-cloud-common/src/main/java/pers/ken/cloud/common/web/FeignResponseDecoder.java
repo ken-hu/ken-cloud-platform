@@ -7,6 +7,7 @@ import feign.Util;
 import feign.codec.DecodeException;
 import feign.codec.Decoder;
 import org.springframework.context.annotation.Configuration;
+import pers.ken.cloud.common.model.PlatformResult;
 
 import java.io.IOException;
 import java.lang.reflect.Type;

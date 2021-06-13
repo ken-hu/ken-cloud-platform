@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import pers.ken.cloud.uc.account.entity.User;
 import pers.ken.cloud.uc.account.service.UserService;
-import pers.ken.cloud.uc.auth.model.AuthUser;
+import pers.ken.cloud.uc.oauth.model.AuthUser;
 
 import java.util.Collections;
 

@@ -1,6 +1,7 @@
 package pers.ken.cloud.common.web;
 
 import lombok.Getter;
+import pers.ken.cloud.common.model.ServiceCode;
 
 /**
  * <code>BusinessException</code>
