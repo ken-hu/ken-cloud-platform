@@ -29,10 +29,10 @@ import java.nio.charset.StandardCharsets;
 @Slf4j
 @Component
 public class ServiceAuthenticationEntryPoint implements ServerAuthenticationEntryPoint {
+    
     @Override
     public Mono<Void> commence(ServerWebExchange exchange, AuthenticationException authenticationException) {
         log.error("Occur AuthenticationException", authenticationException);
-        Throwable cause = authenticationException.getCause();
         ServerHttpResponse response = exchange.getResponse();
         response.setStatusCode(HttpStatus.OK);
         response.getHeaders().set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);

@@ -3,6 +3,11 @@ server:
 spring:
   application:
     name: gateway
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:9401/rsa/publicKey
   cloud:
     gateway:
       routes:
@@ -34,6 +39,6 @@ management:
   endpoints:
     web:
       exposure:
-        include: "loggers,health"
+        include: "*"
 oauth2:
   whitelist-urls: /user

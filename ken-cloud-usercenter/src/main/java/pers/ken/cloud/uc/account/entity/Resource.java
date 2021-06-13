@@ -86,7 +86,7 @@ public class Resource extends Model<Resource> {
 
 
     @Override
-    protected Serializable pkVal() {
+    public Serializable pkVal() {
         return this.id;
     }
 

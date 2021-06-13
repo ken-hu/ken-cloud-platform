@@ -117,7 +117,7 @@ public class ClientDetail extends Model<ClientDetail> {
 
 
     @Override
-    protected Serializable pkVal() {
+    public Serializable pkVal() {
         return null;
     }
 

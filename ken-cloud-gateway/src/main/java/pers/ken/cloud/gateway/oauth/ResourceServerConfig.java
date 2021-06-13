@@ -59,7 +59,7 @@ public class ResourceServerConfig {
                 // resource server config
                 .oauth2ResourceServer()
                 .jwt()
-        .jwtAuthenticationConverter(jwtAuthenticationConverter());
+                .jwtAuthenticationConverter(jwtAuthenticationConverter());
         return http.build();
     }
 

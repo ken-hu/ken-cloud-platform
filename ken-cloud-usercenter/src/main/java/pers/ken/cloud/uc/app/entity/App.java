@@ -1,11 +1,12 @@
 package pers.ken.cloud.uc.app.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.io.Serializable;
 
 /**
  * <p>
@@ -36,7 +37,7 @@ public class App extends Model<App> {
 
 
     @Override
-    protected Serializable pkVal() {
+    public Serializable pkVal() {
         return null;
     }
 

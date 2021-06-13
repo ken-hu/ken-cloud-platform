@@ -1,10 +1,32 @@
 server:
   port: 8889
 spring:
+  datasource:
+    driver-class-name: 'com.mysql.cj.jdbc.Driver'
+    url: jdbc:mysql://127.0.0.1:3306/db_usercenter?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      minimum-idle: 2
+      maximum-pool-size: 20
+      auto-commit: true
+      idle-timeout: 30000
+      connection-timeout: 300000
+      connection-test-query: select 1
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
 
+mybatis-plus:
+  type-enums-package: pers.ken.cloud.estore.*.entity.enums
+  global-config:
+    db-config:
+      select-strategy: not_empty
+      table-underline: true
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
 
 logging:
   level:

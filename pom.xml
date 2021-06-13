@@ -2,12 +2,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.4.7</version>
-        <relativePath/> <!-- lookup parent from repository -->
-    </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>pers.ken.cloud</groupId>
@@ -25,7 +19,7 @@
 
         <spring-boot.version>2.5.0</spring-boot.version>
         <spring-cloud.version>2020.0.3</spring-cloud.version>
-        <alibaba-cloud.version>2.2.5.RELEASE</alibaba-cloud.version>
+        <spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
         <skipTests>true</skipTests>
     </properties>
 
@@ -39,24 +33,12 @@
         <module>ken-cloud-rec-api</module>
         <module>ken-cloud-usercenter</module>
         <module>ken-cloud-usercenter-api</module>
-
     </modules>
 
     <repositories>
         <repository>
             <id>aliyun</id>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-        </repository>
-        <repository>
-            <id>nexus</id>
-            <name>nexus</name>
-            <url>https://maven.datastory.com.cn/nexus/content/groups/public/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
+            <url>https://maven.aliyun.com/nexus/content/groups/public/</url>
         </repository>
     </repositories>
 
@@ -70,17 +52,6 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>30.1.1-jre</version>
-            <scope>compile</scope>
-            <exclusions>
-                <exclusion>
-                    <artifactId>tomcat-annotations-api</artifactId>
-                    <groupId>org.apache.tomcat</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>commons-logging</artifactId>
-                    <groupId>commons-logging</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -94,19 +65,27 @@
             </exclusions>
         </dependency>
     </dependencies>
+
     <dependencyManagement>
         <dependencies>
-    <!--        <dependency>
+            <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
                 <version>${spring-boot.version}</version>
-                <scope>import</scope>
                 <type>pom</type>
-            </dependency>-->
+                <scope>import</scope>
+            </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
                 <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

@@ -24,8 +24,7 @@ public enum ServiceCode implements Serializable {
     /* 失败状态码 */
     FAIL(0, "failed", HttpStatus.INTERNAL_SERVER_ERROR.value()),
 
-    PARAM_IS_INVALID(10001, "par" +
-            "ams_is_invalid", HttpStatus.BAD_REQUEST.value()),
+    PARAM_IS_INVALID(10001, "params_is_invalid", HttpStatus.BAD_REQUEST.value()),
 
     PERMISSION_NOT_ENOUGH(20001, "Permission_not_enough", HttpStatus.FORBIDDEN.value()),
     AUTHENTICATION_FAILED(20002, "Authentication_failed", HttpStatus.UNAUTHORIZED.value()),
